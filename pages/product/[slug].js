@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	AiOutlineMinus,
 	AiOutlinePlus,
@@ -12,6 +12,7 @@ import { Product } from '../../components';
 const ProductDetails = ({ product, products }) => {
 	const { image, name, details, price } = product;
 
+	const [index, setIndex] = useState(0);
 	console.log(image);
 
 	return (
@@ -19,14 +20,24 @@ const ProductDetails = ({ product, products }) => {
 			<div className='product-detail-container'>
 				<div>
 					<div className='image-container'>
-						<img src={urlFor(image && image[0])} alt='' />
+						<img
+							src={urlFor(image && image[index])}
+							alt=''
+							className='product-detail-image'
+						/>
+					</div>
+					<div className='small-images-container'>
+						{image?.map((item, i) => (
+							<img
+								src={urlFor(item)}
+								className={
+									i === index ? 'small-image selected-image' : 'small-image'
+								}
+								onMouseEnter={() => setIndex(i)}
+							/>
+						))}
 					</div>
 				</div>
-				{/* <div className='small-images-container'>
-					{image?.map((item, i) => (
-						<img src={urlFor(item)} className='' onMouseEnter='' />
-					))}
-				</div> */}
 				<div className='product-detail-desc'>
 					<h1>{name}</h1>
 					<div className='reviews'>
